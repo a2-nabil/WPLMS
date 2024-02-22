@@ -131,4 +131,32 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+/* rating css  */
+.star-ratings {
+  unicode-bidi: bidi-override;
+  color: #ccc;
+  font-size: 18px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.star-ratings .fill-ratings {
+  color: #FFBE00;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.star-ratings .fill-ratings span {
+  display: inline-block;
+}
+.star-ratings .empty-ratings {
+  padding: 0;
+  display: block;
+  z-index: 0;
+}
+
 /* #Top trending course card end  */
