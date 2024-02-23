@@ -1,4 +1,85 @@
 <?php
+
+//  custom meta box for course 
+function custom_course_details_meta()
+{
+    add_meta_box(
+        'custom_course_details_meta',
+        'Bundle Course Details',
+        'bundle_course_details',
+        'course',
+        'normal',
+        'high'
+    );
+    add_meta_box(
+        'custom_course_tip_meta',
+        'Bundle course Tip',
+        'bundle_course_tip',
+        'course',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'custom_course_details_meta');
+
+// Callback function to render the meta box
+function bundle_course_details($post)
+{
+    // Retrieve existing meta values
+    $bundle_course_details = get_post_meta($post->ID, 'custom_course_details_meta', true);
+
+
+    // Output HTML for meta box
+    ?>
+    <label class="screen-reader-text" for="custom_course_details_meta">Text Area</label>
+    <textarea rows="1" cols="40" name="custom_course_details_meta" id="custom_course_details_meta" style="display: block;
+    margin: 12px 0 0;
+    height: 4em;
+    width: 100%;"><?php echo esc_html($bundle_course_details); ?> </textarea>
+    <?php
+}
+function bundle_course_tip($post)
+{
+    // Retrieve existing meta values
+    $bundle_course_tip = get_post_meta($post->ID, 'custom_course_tip_meta', true);
+
+
+    // Output HTML for meta box
+    ?>
+    <label class="screen-reader-text" for="custom_course_tip_meta">Bundle Course Tip</label>
+    <textarea rows="1" cols="40" name="custom_course_tip_meta"
+        id="custom_course_tip_meta"><?php echo esc_html($bundle_course_tip); ?> </textarea>
+    <?php
+}
+
+// Save custom meta data when the post is updated
+function save_custom_details_meta($post_id)
+{
+
+    // Check if auto save
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Check user permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save meta data
+    if (isset($_POST['custom_course_details_meta'])) {
+        update_post_meta($post_id, 'custom_course_details_meta', sanitize_text_field($_POST['custom_course_details_meta']));
+    }
+    // Save meta data
+    if (isset($_POST['custom_course_tip_meta'])) {
+        update_post_meta($post_id, 'custom_course_tip_meta', sanitize_text_field($_POST['custom_course_tip_meta']));
+    }
+}
+add_action('save_post', 'save_custom_details_meta');
+
+
+
+
 // bundle course shortcode function 
 function a2n_bundle_courses_shortcode($atts)
 {
@@ -50,17 +131,9 @@ function a2n_bundle_courses_shortcode($atts)
                 }
                 $total_durations = $total_durations + $durations * $unit_durations_parameter;
             }
-            // add custom meta 
-            $meta_key = 'bundle_course_details';
-            $meta_value = 'Courses Bundle / Free Pdf Certificate / Unlimited Free Retake Exam';
-            $meta_key_tip = 'bundle_tip';
-            $meta_value_tip = '7 in 1 Bundle';
-            if ($course_ID && get_post_type($course_ID) === 'course') {
-                add_post_meta($course_ID, $meta_key, $meta_value, true);
-                add_post_meta($course_ID, $meta_key_tip, $meta_value_tip, true);
-            }
-            $bundle_course_details = get_post_meta($course_ID, 'bundle_course_details', true);
-            $bundle_tip = get_post_meta($course_ID, 'bundle_tip', true);
+
+            $bundle_course_details = get_post_meta($course_ID, 'custom_course_details_meta', true);
+            $bundle_tip = get_post_meta($course_ID, 'custom_course_tip_meta', true);
             $course_link = get_the_permalink($course_ID);
             $product_ID = get_post_meta($course_ID, 'vibe_product', true);
             $add_to_cart_url = wc_get_cart_url() . '?add-to-cart=' . $product_ID;
@@ -70,11 +143,15 @@ function a2n_bundle_courses_shortcode($atts)
             <div class="a2n-career_bundle">
                 <div class="a2n-bundle_img">
                     <img src="<?php echo $course_img ?>" alt="" />
-                    <div class="a2n_tip">
+                    <?php
+                    if ($bundle_tip) {
+                        echo '<div class="a2n_tip">
                         <h3>
-                            <?php echo $bundle_tip ?>
+                            ' . $bundle_tip . '
                         </h3>
-                    </div>
+                    </div>';
+                    }
+                    ?>
                 </div>
                 <div class="a2n-bundle__contents">
                     <div class="bundle_title">
@@ -96,13 +173,9 @@ function a2n_bundle_courses_shortcode($atts)
                                     <?php echo trim($detail); ?>
                                 </li>
                                 <?php
-
                             }
                         }
                         ?>
-
-
-
                     </ul>
                 </div>
                 <div class="a2n-bundle__footer">
