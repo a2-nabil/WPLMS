@@ -1,0 +1,111 @@
+button[type="submit"].button,
+a.button {
+  color: #fff !important;
+  border: 1px solid rgba(91, 54, 113, 1) !important;
+}
+button[type="submit"].button:hover,
+a.button:hover {
+  color: #374151 !important;
+  border: 1px solid #475569 !important;
+  background: transparent !important;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0dfff;
+  padding: 10px;
+  margin-right: 10px;
+}
+.minus,
+.plus {
+  width: 6px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: #64748b;
+}
+.cart_item td.product-quantity input.qty {
+  border: 0 !important;
+  text-align: center;
+  padding: 0 !important;
+}
+.qty::-webkit-inner-spin-button,
+.qty::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+@media (max-width: 767px) {
+  .quantity {
+    padding: 0px;
+  }
+  .cart_item td.product-quantity input.qty {
+    width: 40px;
+  }
+  td.product-name {
+    padding-right: 30px !important;
+  }
+  p.special-product-name {
+    width: -webkit-fill-available;
+  }
+  .wc-proceed-to-checkout {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    padding: 20px 25px;
+    z-index: 99;
+  }
+  .woocommerce-cart .woocommerce a.button {
+    margin: 0 !important;
+    width: 100%;
+  }
+  .woocommerce-cart #content {
+    padding-top: 40px !important;
+  }
+  form.woocommerce-cart-form {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .ib_cart_heading h1 {
+    display: none;
+  }
+  .woocommerce-cart .cart-collaterals {
+    padding: 40px 15px;
+  }
+  .ib_course_meta {
+    column-gap: 10px !important;
+    flex-wrap: wrap;
+    row-gap: 0px !important;
+  }
+  .special-offer-title {
+    margin-bottom: 10px;
+  }
+  .special-offer-title h2 {
+    margin: 25px 0 0 0;
+    font-size: 14px;
+  }
+  p.special-product-name {
+    font-size: 12px !important;
+    margin: 0;
+  }
+  .special-products-single {
+    margin-bottom: 10px;
+  }
+  input.xs-add-to-cart-button[type="checkbox"] {
+    margin: 0;
+  }
+  .special-products-wrapper {
+    margin-bottom: 40px;
+  }
+  .ib_slider_heading {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  .woocommerce-cart .cart-collaterals .cart_totals {
+    padding-bottom: 0;
+  }
+}

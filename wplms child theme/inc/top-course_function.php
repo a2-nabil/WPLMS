@@ -2,7 +2,7 @@
 
 // course shortcode function 
 
-function a2n_courses_shortcode($atts)
+function courses_shortcode($atts)
 {
     $atts = shortcode_atts(
         array(
@@ -33,7 +33,6 @@ function a2n_courses_shortcode($atts)
     if ($fetch->have_posts()) {
         while ($fetch->have_posts()) {
             $fetch->the_post();
-
             $course_ID = get_the_ID();
             $course_title = get_the_title($course_ID);
             $course_img = get_the_post_thumbnail_url($course_ID, "large");
@@ -126,4 +125,4 @@ function a2n_courses_shortcode($atts)
     }
     return ob_get_clean();
 }
-add_shortcode('a2n_courses', 'a2n_courses_shortcode');
+add_shortcode('a2n_courses', 'courses_shortcode');
